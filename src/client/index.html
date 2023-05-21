@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" rel="stylesheet">
+    <script>
+		require('./render.js');
+	</script>
+    <title>Document</title>
+    
+</head>
+<body>
+    <style>
+   
+ 
+    </style>
+   
+    <form  text-align: center;>
+        <div>
+            <label id ="label" class="feedback__label" for="file">
+                Нажмите, чтобы выбрать папку    
+            </label>
+            <input class="feedfile" id="file" type="file" multiple webkitdirectory onchange="console.log(this.value);">
+        </div>
+    
+        <div style="display: inline-flex; position: relative;">
+            <button type ="submit" id="upload" class="pressed-button">Отправить</button>
+            <button type ="reset" id="cancel" class="pressed-button">Очистить</button>
+        </div>
+        <div>
+    </div>
+    </form>
+    
+      
+      
+    <div id="preloader" style="display:none">
+        <div class="preloader-wrap">
+            <div class="preloader">
+                <div class="loading-circle loading-circle-one"></div>
+                <div class="loading-circle loading-circle-two"></div>
+                <div class="loading-circle loading-circle-three"></div>
+            </div>
+        </div>
+        <p class = "lie">
+                Наши гномики работают не покладая рук, пожалуйста, подождите
+        </p>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+           
+              <span id = "reset" class="close">&times;</span>
+              <p class="module_text">В папке было обнаружено:</p>
+              <p id="modal-text"></p>
+        </div>
+    </div>
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>

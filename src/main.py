@@ -7,7 +7,7 @@ from werkzeug import serving
 from flask import Flask, jsonify, request
 from PIL import Image
 
-# from model.swan_accountant import SwanAccountant
+from model.swan_accountant import SwanAccountant
 
 MAX_FILE_SIZE = 1024 * 1024 * 1024 + 1
 
@@ -16,21 +16,22 @@ application = Flask(__name__)
 application.config["SECRET_KEY"] = "werty57i39fj92udifkdb56fwed232z"
 application.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
-# swan_accountant = SwanAccountant()
+swan_accountant = SwanAccountant()
 
 creatures_descs = {
-    0: {
-        "en-name": "Swan Shipun",
-        "ru-name": "Лебдедь Шипун",
-    },
     1: {
-        "en-name": "Swan Klikun",
-        "ru-name": "Лебдедь Кликун",
+        "en_name": "Swan Shipun",
+        "ru_name": "Лебдедь Шипун",
+    },
+    0: {
+        "en_name": "Swan Klikun",
+        "ru_name": "Лебдедь Кликун",
     },
     2: {
-        "en-name": "Swan Malyj",
-        "ru-name": "Лебдедь Малый",
+        "en_name": "Swan Malyj",
+        "ru_name": "Лебдедь Малый",
     },
+    "detail_info_src": "urlToFile",
 }
 
 
@@ -86,12 +87,13 @@ def load_imgs():
 @application.route("/load_path", methods=["POST"])
 def load_path():
     print(request.form)
-    dir_path = request.form["dir_path"]
+    dir_path = os.path.dirname(request.form["dir_path"])
     print(dir_path)
     #
-    """
+
     file_list = os.listdir(dir_path)
-     res_counter = Counter()
+    res_counter = Counter()
+
     for filename in file_list:
         file_path = os.path.join(dir_path, filename)
         pil_img = Image.open(file_path)
@@ -99,8 +101,7 @@ def load_path():
         res_counter.update(Counter(swan_nums))
         print(swan_nums)
     answer = generate_answer(res_counter)
-    """
-    answer = fake_answer
+
     answer["success"] = True
     return jsonify(answer)
 
@@ -111,9 +112,9 @@ def main():
         port=58513,
         app=application,
         threaded=True)
-    #port = server.socket.getsockname()[1]
+    # port = server.socket.getsockname()[1]
     print(f"http://localhost:{58513}")
-    #subprocess.call("client/ElectronSwanApp-win32-x64/ElectronSwanApp.exe")
+    subprocess.Popen("client/ElectronSwanApp-win32-x64/ElectronSwanApp.exe")
 
     server.serve_forever()
 
