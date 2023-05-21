@@ -1,6 +1,8 @@
 import logging
 import os
+import subprocess
 from collections import Counter
+from werkzeug import serving
 
 from flask import Flask, jsonify, request
 from PIL import Image
@@ -104,7 +106,16 @@ def load_path():
 
 
 def main():
-    application.run(host="127.0.0.1", port=8000)
+    server = serving.make_server(
+        host='127.0.0.1',
+        port=58513,
+        app=application,
+        threaded=True)
+    #port = server.socket.getsockname()[1]
+    print(f"http://localhost:{58513}")
+    #subprocess.call("client/ElectronSwanApp-win32-x64/ElectronSwanApp.exe")
+
+    server.serve_forever()
 
 
 if __name__ == "__main__":
